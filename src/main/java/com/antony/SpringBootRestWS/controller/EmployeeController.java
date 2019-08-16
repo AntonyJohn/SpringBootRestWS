@@ -33,7 +33,6 @@ import com.antony.SpringBootRestWS.service.EmployeeService;
 public class EmployeeController {
     
 	private static @Log Logger LOG;	
-	Employee emp;
     
     @Autowired
     private EmployeeService employeeService;
@@ -47,7 +46,7 @@ public class EmployeeController {
      */
     @RequestMapping(value="/retrieveEmployee", method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public@ResponseBody Optional<Employee>  retrieveEmployee(@RequestParam("empID") String empID){					
+    public@ResponseBody Optional<Employee>  retrieveEmployee(@RequestParam("empID") String empID){
     	LOG.info("Start:: EmployeeController --> retrieveEmployee()");    	
         Optional<Employee> obj=employeeService.retrieveEmployee(empID);
         LOG.info("End:: EmployeeController --> retrieveEmployee()");
