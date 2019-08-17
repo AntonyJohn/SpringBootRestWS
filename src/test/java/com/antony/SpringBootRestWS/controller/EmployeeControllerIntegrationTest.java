@@ -40,7 +40,7 @@ public class EmployeeControllerIntegrationTest {
 
 	/**
 	 * setupFactory method used to inject @LOG on EmployeeController class 
-	 * to avoid null pointer exception1
+	 * to avoid null pointer exception
 	 */
 	@Before
 	public void setupFactory() {
