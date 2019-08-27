@@ -54,7 +54,7 @@ public class EmployeeControllerIntegrationTest {
 		Employee antony = new Employee();
 		antony.setId(1);		
 		Mockito.when(employeeServiceMock.retrieveEmployee("1")).thenReturn(Optional.of(antony));
-		assertEquals(antony.getFirstName(), employeeController.retrieveEmployee("1").get().getFirstName());
+		assertEquals("test jenkins", employeeController.retrieveEmployee("1").get().getFirstName());
 	}
 
 	@Test
