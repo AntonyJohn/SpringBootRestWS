@@ -36,7 +36,9 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
+			<!-- Disable embedded tomcat server
+			<scope>provided</scope> 
+			-->
 		</dependency>				
 		<!-- mysql connector -->
 		<dependency>
@@ -60,6 +62,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- <configuration>
+					<mainClass>com.antony.SpringBootRestWS.SpringBootRestWsApplication</mainClass>
+				</configuration> -->
 			</plugin>
 		</plugins>
 	</build>
