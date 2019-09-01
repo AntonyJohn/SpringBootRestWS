@@ -32,10 +32,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	
-    	/*http.requiresChannel()
-    	  .antMatchers().requiresSecure();*/
-    	
-        http
+    	http
             .logout()
             .and()
             // default with authentication
