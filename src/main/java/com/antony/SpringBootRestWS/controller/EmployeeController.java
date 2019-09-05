@@ -61,7 +61,7 @@ public class EmployeeController {
     @RequestMapping(value="/retrieveAllEmployee", method=RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public@ResponseBody List<Employee>  retrieveAllEmployee(){					
-    	LOG.info("Start:: EmployeeController --> retrieveAllEmployee()1");  
+    	LOG.info("Start:: EmployeeController --> retrieveAllEmployee()");  
         List<Employee> obj=employeeService.retrieveAllEmployee(); 
         LOG.info("End:: EmployeeController --> retrieveAllEmployee()");
         return obj;				 
