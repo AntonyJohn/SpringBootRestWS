@@ -49,11 +49,10 @@ pipeline {
     post {
         always {
           script {
-            if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
-                echo 'send your back to normal email here, maybe something like this, your mileage may vary'
+            if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {                
                 emailext (
-                  subject: "Build Sucess: ${currentBuild.fullDisplayName}",
-                  body: "Project Build is <blink>Sucess</blink>",
+                  subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+                  body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
                   mimeType: 'text/html',
                   recipientProviders: [[$class: 'RequesterRecipientProvider'], [$class: 'DevelopersRecipientProvider']]
                 )
