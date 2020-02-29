@@ -62,9 +62,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- <configuration>
+				<configuration>
 					<mainClass>com.antony.SpringBootRestWS.SpringBootRestWsApplication</mainClass>
-				</configuration> -->
+				</configuration> 
 			</plugin>
 		</plugins>
 	</build>
