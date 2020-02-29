@@ -36,10 +36,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
             .and()
             // default with authentication
-            .authorizeRequests().anyRequest().authenticated()
-            .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and().csrf()            
-            .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint());
+            .authorizeRequests()
+            .antMatchers("/login/authenticate").permitAll()
+            .anyRequest().authenticated()
+            .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)                        
+            .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
+            // Disable CSRF for fix unauthorized access issue POST method
+            /* CSRF protection for any request that could be processed by a browser by normal users. 
+             * If you are only creating a service that is used by non-browser clients, 
+             * you will likely want to disable CSRF protection.*/
+            .and().csrf().disable();
     }
 
     @Bean
