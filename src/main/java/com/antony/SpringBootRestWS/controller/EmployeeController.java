@@ -54,7 +54,7 @@ public class EmployeeController {
     }
             
     /**
-     * Retrieve All Employee Details
+     * Retrieve All Employee Detail
      * 
      * @return
      */
