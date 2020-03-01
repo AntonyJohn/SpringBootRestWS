@@ -37,4 +37,19 @@ public class EmployeeService {
     	LOG.info("EmployeeService --> retrieveAllEmployee()");
     	return employeeRepository.findAll();
     }
+    
+    public Employee addEmployee(Employee emp) {
+    	LOG.info("EmployeeService --> addEmployee()");
+    	return employeeRepository.saveAndFlush(emp);
+    }
+    
+    public Employee updateEmployee(Employee emp) {
+    	LOG.info("EmployeeService --> addEmployee()");
+    	return employeeRepository.saveAndFlush(emp);
+    }
+    
+    public void deleteEmployee(Integer empId) {
+    	LOG.info("EmployeeService --> deleteEmployee()");
+    	employeeRepository.deleteById(empId);
+    }
 }

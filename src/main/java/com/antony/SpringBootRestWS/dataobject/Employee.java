@@ -36,14 +36,8 @@ public class Employee implements Serializable {
     private String company;
     @Column(name = "jobtitle")
     private String jobTitle;
-    @Column(name = "businessphone")
-    private String businessPhone;
-    @Column(name = "homephone")
-    private String homePhone;
     @Column(name = "mobilephone")
-    private String mobilePhone;
-    @Column(name = "faxnumber")
-    private String faxNumber;
+    private String mobilePhone;    
     @Column(name = "street")
     private String street;
     @Column(name = "city")
@@ -54,147 +48,123 @@ public class Employee implements Serializable {
     private String country;
     @Column(name = "email")
     private String email;
-    @Column(name = "webpage")
-    private String webPage;
-    @Column(name = "notes")
-    private String notes;
+    @Column(name = "url")
+    private String url;
+    @Column(name = "status")
+    private String status;
 
     public Employee() {
     }
 
     public Employee(Integer id) {
         this.id = id;
-    }
+    }    
 
     public Integer getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public String getCompany() {
-        return company;
-    }
+	public String getCompany() {
+		return company;
+	}
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
+	public void setCompany(String company) {
+		this.company = company;
+	}
 
-    public String getJobTitle() {
-        return jobTitle;
-    }
+	public String getJobTitle() {
+		return jobTitle;
+	}
 
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
+	}
 
-    public String getBusinessPhone() {
-        return businessPhone;
-    }
+	public String getMobilePhone() {
+		return mobilePhone;
+	}
 
-    public void setBusinessPhone(String businessPhone) {
-        this.businessPhone = businessPhone;
-    }
+	public void setMobilePhone(String mobilePhone) {
+		this.mobilePhone = mobilePhone;
+	}
 
-    public String getHomePhone() {
-        return homePhone;
-    }
+	public String getStreet() {
+		return street;
+	}
 
-    public void setHomePhone(String homePhone) {
-        this.homePhone = homePhone;
-    }
+	public void setStreet(String street) {
+		this.street = street;
+	}
 
-    public String getMobilePhone() {
-        return mobilePhone;
-    }
+	public String getCity() {
+		return city;
+	}
 
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
-    }
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-    public String getFaxNumber() {
-        return faxNumber;
-    }
+	public String getState() {
+		return state;
+	}
 
-    public void setFaxNumber(String faxNumber) {
-        this.faxNumber = faxNumber;
-    }
+	public void setState(String state) {
+		this.state = state;
+	}
 
-    public String getStreet() {
-        return street;
-    }
+	public String getCountry() {
+		return country;
+	}
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getState() {
-        return state;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setState(String state) {
-        this.state = state;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
 
-    public String getCountry() {
-        return country;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getWebPage() {
-        return webPage;
-    }
-
-    public void setWebPage(String webPage) {
-        this.webPage = webPage;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    @Override
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);

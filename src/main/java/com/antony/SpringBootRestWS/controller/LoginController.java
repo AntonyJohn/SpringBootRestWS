@@ -15,9 +15,10 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +38,7 @@ public class LoginController {
     Users users;
     
     @SuppressWarnings({ "rawtypes" })
-    @RequestMapping(value="/authenticate", method=RequestMethod.POST, headers="Accept=application/json")
+    @PostMapping(value="/authenticate", headers="Accept=application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List  authenticate(@RequestBody UsersVO loginid){					
@@ -48,7 +49,7 @@ public class LoginController {
     }
     
     //Retrieve User Details	
-    @RequestMapping(value="/user", method=RequestMethod.GET)
+    @GetMapping(value="/user")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Optional<Users>  retrieveUser(@RequestParam("userID") String userID){					
@@ -59,7 +60,7 @@ public class LoginController {
     }
     
     @SuppressWarnings({ "rawtypes" })
-    @RequestMapping(value="/userall", method=RequestMethod.GET)
+    @GetMapping(value="/userall")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List  retrieveAllUser(){					
