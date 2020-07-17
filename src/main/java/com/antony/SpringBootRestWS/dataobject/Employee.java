@@ -6,13 +6,20 @@
 package com.antony.SpringBootRestWS.dataobject;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.List;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  *
@@ -36,16 +43,23 @@ public class Employee implements Serializable {
     private String company;
     @Column(name = "jobtitle")
     private String jobTitle;
+    @Column(name = "dob")
+    private Date dob;  
     @Column(name = "mobilephone")
     private String mobilePhone;    
-    @Column(name = "street")
+    /*@Column(name = "street")
     private String street;
     @Column(name = "city")
     private String city;
     @Column(name = "state")
     private String state;
     @Column(name = "country")
-    private String country;
+    private String country;*/
+    
+    @OneToMany(cascade=CascadeType.ALL,mappedBy="employee")
+    @JsonManagedReference
+    private List<Address> address;
+    
     @Column(name = "email")
     private String email;
     @Column(name = "url")
@@ -100,6 +114,14 @@ public class Employee implements Serializable {
 		this.jobTitle = jobTitle;
 	}
 
+	public Date getDob() {
+		return dob;
+	}
+
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+
 	public String getMobilePhone() {
 		return mobilePhone;
 	}
@@ -107,37 +129,15 @@ public class Employee implements Serializable {
 	public void setMobilePhone(String mobilePhone) {
 		this.mobilePhone = mobilePhone;
 	}
+	
+	
 
-	public String getStreet() {
-		return street;
+	public List<Address> getAddress() {
+		return address;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
+	public void setAddress(List<Address> address) {
+		this.address = address;
 	}
 
 	public String getEmail() {
