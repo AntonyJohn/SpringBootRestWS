@@ -27,17 +27,14 @@ CREATE TABLE `employee` (
   `firstName` varchar(45) DEFAULT NULL,
   `lastName` varchar(45) DEFAULT NULL,
   `company` varchar(45) DEFAULT NULL,
-  `jobTitle` varchar(45) DEFAULT NULL,  
-  `mobilePhone` varchar(45) DEFAULT NULL,  
-  `street` varchar(45) DEFAULT NULL,
-  `city` varchar(45) DEFAULT NULL,
-  `state` varchar(45) DEFAULT NULL,
-  `country` varchar(45) DEFAULT NULL,
+  `jobTitle` varchar(45) DEFAULT NULL,
+  `mobilePhone` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
-  `url` varchar(250) DEFAULT NULL, 
-  `status` varchar(45) DEFAULT NULL,   
+  `url` varchar(250) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +43,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,'antony','m','CTS','SE','9894488726','600 Caisson Hill Road','Smoky Hill','Texas','USA','PamelaJCallaghan@rhyta.com','https://source.unsplash.com/1600x900?product','Active'),(2,'Andrew','Mowry','CTS','Software Developer','6987984658','2104 Melm Street','Providence','rhode island','USA','ClydeRPrice@jourrapide.com','https://source.unsplash.com/1600x900?product','Active'),(3,'Milton','White','CTS','Tester','2325659658','1214 Charles Street','Southfield','Florida','USA','JohnGHaines@armyspy.com','https://source.unsplash.com/1600x900?product','Active');
+INSERT INTO `employee` VALUES (6,'Japheth1','A','CTS1','TTT','9894488729','bbbbb@gmail.com','','Active','1986-07-05'),(10,'Antony','M','cts','manager','9894488349','bnnnnn@gmail.com','','Active','1993-09-05'),(13,'Kennedy','m','test','klh','9879879890','jjjjjjj@test.com','','Active','1979-12-28'),(14,'sadf','asd','advs','sdf','234343243','anto@test.com','','Active','2001-05-08'),(17,'Rajesh','A','BBB','sadf','9894294777','tttttt@gmailcom','','Active','1984-09-05'),(18,'Raja','s','jkbkjbjk','jkbk','9886780099','raja@test.com','','Active','1986-07-05'),(19,'rani','m','ccc','sdfasdf','9894488321','rani@test.com','','Active','1986-07-05'),(20,'rahul','m','kjbjhb','jkbjk','4234342353','rahul@test.com','','Active','2001-05-01'),(21,'mani','m','hyugyug','gyug','8767687687','mani@test.com','','Active','1985-07-05'),(22,'jegadeesh','j','asdfa','sdf','8768767899','jega@test.com','','Active','1986-07-05'),(25,'JUDO','M','','','9868677864','judo@test.com','','Active','1994-07-05');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
