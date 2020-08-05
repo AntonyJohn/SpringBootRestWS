@@ -39,7 +39,12 @@
 			<!-- Disable embedded tomcat server
 			<scope>provided</scope> 
 			-->
-		</dependency>				
+		</dependency>	
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.6.0</version>
+		</dependency>			
 		<!-- mysql connector -->
 		<dependency>
 			<groupId>mysql</groupId>

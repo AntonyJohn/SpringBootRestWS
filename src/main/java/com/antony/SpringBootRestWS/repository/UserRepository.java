@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.antony.SpringBootRestWS.dataobject.Users;
 
@@ -18,6 +19,7 @@ import com.antony.SpringBootRestWS.dataobject.Users;
  */
 @Repository
 @Transactional
+//@CrossOrigin(origins = "http://localhost:4200")
 public interface UserRepository  extends JpaRepository<Users, Integer>{
 	
 	// Ref Named query in Users.java

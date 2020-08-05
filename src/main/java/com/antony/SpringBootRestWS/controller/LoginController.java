@@ -4,8 +4,12 @@
 package com.antony.SpringBootRestWS.controller;
 
 
+import com.antony.SpringBootRestWS.dataobject.JwtResponse;
 import com.antony.SpringBootRestWS.dataobject.Users;
+import com.antony.SpringBootRestWS.entrypoint.CustomUserDetailsService;
+import com.antony.SpringBootRestWS.entrypoint.SecurityUser;
 import com.antony.SpringBootRestWS.login.valueobject.UsersVO;
+import com.antony.SpringBootRestWS.security.config.JwtTokenUtil;
 import com.antony.SpringBootRestWS.service.LoginService;
 import com.antony.SpringBootRestWS.Log;
 
@@ -15,6 +19,13 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @RestController
 @RequestMapping("/login")
+//@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class LoginController {
 
     @Autowired
@@ -37,11 +49,53 @@ public class LoginController {
     private static @Log Logger LOG;
     Users users;
     
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    
+    @Autowired
+    private CustomUserDetailsService userService;
+    
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+    
+	/**
+	 * Spring Security JWT Authentication
+	 * 
+	 * @param loginid
+	 * @return
+	 */
     @SuppressWarnings({ "rawtypes" })
-    @PostMapping(value="/authenticate", headers="Accept=application/json")
+    @PostMapping(value="/authenticatejwt", headers="Accept=application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List  authenticate(@RequestBody UsersVO loginid){					
+    public ResponseEntity<JwtResponse>  authenticateJWT(@RequestBody UsersVO loginid){					
+    	LOG.info("Start:: LoginController --> authenticate() - POST");     
+        try {
+			authenticate(loginid.getUsername(), loginid.getPassword());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			//return ResponseEntity.ok(new JwtResponse(""));	
+		}
+        //SecurityUser secUser = (SecurityUser) userService.loadUserByUsername(username);
+        final UserDetails userDetails = userService.loadUserByUsername(loginid.getUsername());
+        final String token = jwtTokenUtil.generateToken(userDetails.getUsername());
+
+        LOG.info("End:: LoginController --> authenticate() - POST");
+        return ResponseEntity.ok(new JwtResponse(token));			 
+    }
+    
+    /**
+     * Spring Security Basic Authentication
+     * 
+     * @param loginid
+     * @return
+     */
+    @SuppressWarnings({ "rawtypes" })
+    @PostMapping(value="/authenticatebasic", headers="Accept=application/json")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List  authenticateBasic(@RequestBody UsersVO loginid){					
     	LOG.info("Start:: LoginController --> authenticate() - POST");     
         List obj=loginService.getAuthenticate(loginid);	
         LOG.info("End:: LoginController --> authenticate() - POST");
@@ -128,4 +182,14 @@ public class LoginController {
         return md5;
     }*/
 
+
+	private void authenticate(String username, String password) throws Exception {
+		try {
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+		} catch (DisabledException e) {
+			throw new Exception("USER_DISABLED", e);
+		} catch (BadCredentialsException e) {
+			throw new Exception("INVALID_CREDENTIALS", e);
+		}
+	}
 }
