@@ -55,7 +55,8 @@ public class EmployeeServiceIntegrationTest {
 		antony.setId(1);
 		antony.setFirstName("antony");
 		Mockito.when(employeeRepositoryMock.findById(antony.getId())).thenReturn(Optional.of(antony));
-		assertEquals(antony.getFirstName(), employeeService.retrieveEmployee("1").get().getFirstName());
+		Employee emp = (Employee) employeeService.retrieveEmployee("1").getResponseValue();
+		assertEquals(antony.getFirstName(), emp.getFirstName());
 	}
 
 	@Test
@@ -71,6 +72,7 @@ public class EmployeeServiceIntegrationTest {
 		empList.add(john);
 
 		Mockito.when(employeeRepositoryMock.findAll()).thenReturn(empList);
-		assertEquals(empList.get(0).getFirstName(), employeeService.retrieveAllEmployee().get(0).getFirstName());
+		List<Employee> emp = (List<Employee>) employeeService.retrieveAllEmployee().getResponseValue();
+		assertEquals(empList.get(0).getFirstName(), emp.get(0).getFirstName());
 	}
 }

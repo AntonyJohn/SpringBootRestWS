@@ -23,6 +23,7 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import com.antony.SpringBootRestWS.LogInjector;
 import com.antony.SpringBootRestWS.dataobject.Employee;
 import com.antony.SpringBootRestWS.service.EmployeeService;
+import com.antony.SpringBootRestWS.utill.Response;
 
 /**
  *
@@ -51,14 +52,19 @@ public class EmployeeControllerIntegrationTest {
 
 	@Test
 	public void testRetrieveEmployee() throws Exception {
+		Response res = new Response();
 		Employee antony = new Employee();
-		antony.setId(1);		
-		Mockito.when(employeeServiceMock.retrieveEmployee("1")).thenReturn(Optional.of(antony));
-		assertEquals(antony.getFirstName(), employeeController.retrieveEmployee("1").get().getFirstName());
+		antony.setId(1);
+		res.setResponseType("S");
+		res.setResponseValue(antony);
+		Mockito.when(employeeServiceMock.retrieveEmployee("1")).thenReturn(res);
+		Employee emp = (Employee) employeeController.retrieveEmployee("1").getBody().getResponseValue();
+		assertEquals(antony.getFirstName(), emp.getFirstName());
 	}
 
 	@Test
 	public void testretrieveAllEmployee() throws Exception {
+		Response res = new Response();
 		List<Employee> empList = new ArrayList<Employee>();
 		Employee antony = new Employee();
 		antony.setId(1);
@@ -68,8 +74,11 @@ public class EmployeeControllerIntegrationTest {
 		antony.setId(2);
 		antony.setFirstName("john");
 		empList.add(john);
+		res.setResponseType("S");
+		res.setResponseValue(empList);
 
-		Mockito.when(employeeServiceMock.retrieveAllEmployee()).thenReturn(empList);
-		assertEquals(antony.getFirstName(), employeeController.retrieveAllEmployee().get(0).getFirstName());
+		Mockito.when(employeeServiceMock.retrieveAllEmployee()).thenReturn(res);
+		List<Employee> emp = (List<Employee>) employeeController.retrieveAllEmployee().getBody().getResponseValue();
+		assertEquals(antony.getFirstName(), emp.get(0).getFirstName());
 	}	
 }

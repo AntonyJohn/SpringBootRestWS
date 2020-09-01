@@ -17,6 +17,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<!-- <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
 	</properties>
 
 	<dependencies>
@@ -37,8 +38,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<!-- Disable embedded tomcat server
-			<scope>provided</scope> 
-			-->
+			<scope>provided</scope> -->
+			
 		</dependency>	
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -69,7 +70,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<mainClass>com.antony.SpringBootRestWS.SpringBootRestWsApplication</mainClass>
-				</configuration> 
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

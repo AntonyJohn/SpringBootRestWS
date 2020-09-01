@@ -7,7 +7,9 @@ package com.antony.SpringBootRestWS.service;
 
 import com.antony.SpringBootRestWS.dataobject.Employee;
 import com.antony.SpringBootRestWS.repository.EmployeeRepository;
+import com.antony.SpringBootRestWS.utill.Response;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,24 +30,76 @@ public class EmployeeService {
 	
 	private static @com.antony.SpringBootRestWS.Log Logger LOG;	
     
-    public Optional<Employee> retrieveEmployee(String empId) {
-    	LOG.info("EmployeeService --> retrieveEmploye()");    	
-        return employeeRepository.findById(new Integer(empId));                                      
+    public Response retrieveEmployee(String empId) {
+    	LOG.info("EmployeeService --> retrieveEmploye()");  
+    	Response response = null;
+    	Optional<Employee> employee = employeeRepository.findById(new Integer(empId)); 
+    	if(employee.isPresent()) {
+    		response = new Response();
+    		response.setResponseType("S");
+    		response.setResponseValue(employee);
+    	} else {
+	    	response = new Response();
+			response.setResponseType("F");
+			LinkedHashMap<String, String> errorMap = new LinkedHashMap<String, String>();
+			errorMap.put("message", "No Data Found");
+			response.setResponseValue(errorMap);
+    	}
+        return response;                                      
     }
     
-    public List<Employee> retrieveAllEmployee() {
+    public Response retrieveAllEmployee() {
     	LOG.info("EmployeeService --> retrieveAllEmployee()");
-    	return employeeRepository.findAll();
+    	Response response = null;
+    	List<Employee> employee = employeeRepository.findAll(); 
+    	if(!employee.isEmpty()) {
+    		response = new Response();
+    		response.setResponseType("S");
+    		response.setResponseValue(employee);
+    	} else {
+	    	response = new Response();
+			response.setResponseType("F");
+			LinkedHashMap<String, String> errorMap = new LinkedHashMap<String, String>();
+			errorMap.put("message", "No Data Found");
+			response.setResponseValue(errorMap);
+    	}
+        return response;    	
     }
     
-    public Employee addEmployee(Employee emp) {
+    public Response addEmployee(Employee emp) {
     	LOG.info("EmployeeService --> addEmployee()");
-    	return employeeRepository.saveAndFlush(emp);
+    	Response response = null;
+    	Employee savedEmployee = employeeRepository.saveAndFlush(emp);
+    	if(null != savedEmployee) {
+    		response = new Response();
+    		response.setResponseType("S");
+    		response.setResponseValue(savedEmployee);
+    	} else {
+	    	response = new Response();
+			response.setResponseType("F");
+			LinkedHashMap<String, String> errorMap = new LinkedHashMap<String, String>();
+			errorMap.put("message", "Employee insertion failed");
+			response.setResponseValue(errorMap);
+    	}
+    	return response;
     }
     
-    public Employee updateEmployee(Employee emp) {
+    public Response updateEmployee(Employee emp) {
     	LOG.info("EmployeeService --> addEmployee()");
-    	return employeeRepository.saveAndFlush(emp);
+    	Response response = null;
+    	Employee savedEmployee = employeeRepository.saveAndFlush(emp);
+    	if(null != savedEmployee) {
+    		response = new Response();
+    		response.setResponseType("S");
+    		response.setResponseValue(savedEmployee);
+    	} else {
+	    	response = new Response();
+			response.setResponseType("F");
+			LinkedHashMap<String, String> errorMap = new LinkedHashMap<String, String>();
+			errorMap.put("message", "Employee insertion failed");
+			response.setResponseValue(errorMap);
+    	}
+    	return response;
     }
     
     public void deleteEmployee(Integer empId) {

@@ -86,6 +86,43 @@ public class LoginController {
     }
     
     /**
+	 * Spring Security JWT Authentication
+	 * 
+	 * @param loginid
+	 * @return
+	 *
+    @SuppressWarnings({ "rawtypes" })
+    @PostMapping(value="/authenticatejwt", headers="Accept=application/json")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public ResponseEntity<Object>  authenticateJWT(@RequestBody UsersVO loginid){					
+    	LOG.info("Start:: LoginController --> authenticate() - POST"); 
+    	Response response = new Response();
+        try {
+			authenticate(loginid.getUsername(), loginid.getPassword());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			LinkedHashMap<String, String> message = new LinkedHashMap<String, String>();
+			message.put("message", "INVALID_CREDENTIALS");
+			response.setResponseValue(message);
+			response.setResponseType("F");
+			return new ResponseEntity<Object>(response, HttpStatus.BAD_REQUEST);
+			//return ResponseEntity.ok(new JwtResponse(""));	
+		}
+        //SecurityUser secUser = (SecurityUser) userService.loadUserByUsername(username);
+        final UserDetails userDetails = userService.loadUserByUsername(loginid.getUsername());
+        final String token = jwtTokenUtil.generateToken(userDetails.getUsername());
+
+        LOG.info("End:: LoginController --> authenticate() - POST");
+        response.setResponseValue(new JwtResponse(token));
+      	response.setResponseType("S");
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+        //return ResponseEntity.ok(new JwtResponse(token));			 
+    }
+    */
+    /**
      * Spring Security Basic Authentication
      * 
      * @param loginid

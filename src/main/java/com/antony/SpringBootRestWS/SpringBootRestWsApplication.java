@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @SpringBootApplication(scanBasePackages="com.antony.SpringBootRestWS")
 @EnableWebSecurity
 @ComponentScan(basePackages={"com.antony.SpringBootRestWS"})
-public class SpringBootRestWsApplication  extends SpringBootServletInitializer{
+public class SpringBootRestWsApplication  extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootRestWsApplication.class, args);

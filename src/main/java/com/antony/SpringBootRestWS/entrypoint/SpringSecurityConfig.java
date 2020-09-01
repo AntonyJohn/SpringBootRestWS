@@ -14,8 +14,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 /**
 *
 * @author Antony John
-*/
-/*@Configuration
+*
+@Configuration
 @EnableWebSecurity*/
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 

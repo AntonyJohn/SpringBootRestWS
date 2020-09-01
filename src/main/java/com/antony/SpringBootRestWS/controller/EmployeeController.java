@@ -8,9 +8,12 @@ package com.antony.SpringBootRestWS.controller;
 import java.util.List;
 import java.util.Optional;
 
+//import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,17 +25,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.antony.SpringBootRestWS.Log;
+import com.antony.SpringBootRestWS.Base.exception.ServiceException;
 import com.antony.SpringBootRestWS.dataobject.Employee;
 import com.antony.SpringBootRestWS.service.EmployeeService;
+import com.antony.SpringBootRestWS.utill.Response;
+
 
 /**
  *
  * @author Antony John
  */
 
-@Controller
+@RestController
 @RequestMapping("/employee-management")
 //@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class EmployeeController {
@@ -48,28 +55,36 @@ public class EmployeeController {
      * 
      * @param empID
      * @return
+     * @throws ServiceException 
      */
     @GetMapping(value="/employees/{empId}", headers="Accept=application/json")
     @ResponseStatus(HttpStatus.OK)
-    public@ResponseBody Optional<Employee>  retrieveEmployee(@PathVariable("empId") String empId){
+    public ResponseEntity<Response>  retrieveEmployee(@PathVariable("empId") String empId) throws ServiceException{
     	LOG.info("Start:: EmployeeController --> retrieveEmployee()");    	
-        Optional<Employee> obj=employeeService.retrieveEmployee(empId);
-        LOG.info("End:: EmployeeController --> retrieveEmployee()");
-        return obj;				 
+    	Response response = employeeService.retrieveEmployee(empId);
+    	if ("F".equals(response.getResponseType())) {
+			return new ResponseEntity<Response>(response, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
+    	LOG.info("End:: EmployeeController --> retrieveEmployee()");
+		return new ResponseEntity<Response>(response, new HttpHeaders(), HttpStatus.OK);                        		
     }
             
     /**
      * Retrieve All Employee Details
      * 
      * @return
+     * @throws ServiceException 
      */
     @GetMapping(value="/employees", headers="Accept=application/json")
     @ResponseStatus(HttpStatus.OK)
-    public@ResponseBody List<Employee>  retrieveAllEmployee(){					
+    public ResponseEntity<Response>  retrieveAllEmployee() throws ServiceException{					
     	LOG.info("Start:: EmployeeController --> retrieveAllEmployee()");  
-        List<Employee> obj=employeeService.retrieveAllEmployee(); 
+        Response response=employeeService.retrieveAllEmployee(); 
+        if ("F".equals(response.getResponseType())) {
+			return new ResponseEntity<Response>(response, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
         LOG.info("End:: EmployeeController --> retrieveAllEmployee()");
-        return obj;				 
+    	return new ResponseEntity<Response>(response, new HttpHeaders(), HttpStatus.OK);   				
     }
     
     /**
@@ -79,13 +94,15 @@ public class EmployeeController {
      * @return
      */
     @PostMapping(value="/employee", headers={"Content-Type=application/json","Accept=application/json"})
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public Employee  addEmployee(@RequestBody Employee employee){					
+    @ResponseStatus(HttpStatus.OK)    
+    public ResponseEntity<Response>  addEmployee(@RequestBody Employee employee){					
     	LOG.info("Start:: EmployeeController --> addEmployee() - POST");     
-        Employee obj=employeeService.addEmployee(employee);	
+        Response response=employeeService.addEmployee(employee); 
+        if ("F".equals(response.getResponseType())) {
+			return new ResponseEntity<Response>(response, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
         LOG.info("End:: EmployeeController --> addEmployee() - POST");
-        return obj;				 
+    	return new ResponseEntity<Response>(response, new HttpHeaders(), HttpStatus.OK);                 			
     }
     
     /**
@@ -97,11 +114,14 @@ public class EmployeeController {
     @PutMapping(value="/employee", headers={"Content-Type=application/json","Accept=application/json"})
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Employee  updateEmployee(@RequestBody Employee employee){					
+    public ResponseEntity<Response>  updateEmployee(@RequestBody Employee employee){					
     	LOG.info("Start:: EmployeeController --> updateEmployee() - PUT");     
-        Employee obj=employeeService.updateEmployee(employee);	
+        Response response=employeeService.updateEmployee(employee); 
+        if ("F".equals(response.getResponseType())) {
+			return new ResponseEntity<Response>(response, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
         LOG.info("End:: EmployeeController --> updateEmployee() - PUT");
-        return obj;				 
+    	return new ResponseEntity<Response>(response, new HttpHeaders(), HttpStatus.OK);        			
     }
      
     /**
@@ -111,9 +131,13 @@ public class EmployeeController {
      */
     @DeleteMapping(value="/employee/{empId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteEmployee(@PathVariable String empId){					
-    	LOG.info("Start:: EmployeeController --> deleteEmployee() - DELETE");     
+    public ResponseEntity<Response> deleteEmployee(@PathVariable String empId){					
+    	LOG.info("Start:: EmployeeController --> deleteEmployee() - DELETE");    
+    	Response response = new Response();
         employeeService.deleteEmployee(new Integer(empId));	
-        LOG.info("End:: EmployeeController --> deleteEmployee() - DELETE");        				 
+        response.setResponseType("S");
+        response.setResponseValue("Employee deleted sucessfully");
+        LOG.info("End:: EmployeeController --> deleteEmployee() - DELETE"); 
+        return new ResponseEntity<Response>(response, new HttpHeaders(), HttpStatus.OK);               				
     }
 }
